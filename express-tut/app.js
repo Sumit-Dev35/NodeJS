@@ -11,8 +11,8 @@ app.get('/about',(req,res)=>{
     res.send('About Page')
 })
 
-app.get('*',(req,res)=>{
-    res.send('Error Page')
+app.all('*',(req,res)=>{
+    res.status(404).send(`<h1>Resource Not Found</h1>`)
 })
 
 app.listen(port,(error)=>{
