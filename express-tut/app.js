@@ -1,28 +1,25 @@
-const { log } = require('console');
-const http = require('http');
-const {readFileSync}=require('fs');
+const express=require('express');
 
-const homePage=readFileSync(`./index.html`);
-console.log(homePage)
+const app=express();
+const port=5000;
 
-
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {
-        'content-type': 'text/html'
-    })
-    if (req.url === '/'){
-      res.write(homePage)
-    }
-    else if (req.url === '/about')
-        res.write(`<h1>About Page</h1>`)
-    res.end()
+app.get('/',(req,res)=>{
+    res.send('Home Page')
 })
 
-server.listen(5000, (error) => {
-    if (error) {
-        log(`Got an error`, err)
+app.get('/about',(req,res)=>{
+    res.send('About Page')
+})
+
+app.get('*',(req,res)=>{
+    res.send('Error Page')
+})
+
+app.listen(port,(error)=>{
+    if(error){
+        console.log(`Getting an error on this port ${port}`);
     }
-    else {
-        log(`Server is listening on this ${5000}`)
+    else{
+        console.log(`Server is running on ${port} number`)
     }
 })
